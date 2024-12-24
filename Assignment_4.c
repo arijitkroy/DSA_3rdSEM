@@ -1,77 +1,58 @@
 #include <stdio.h>
-#define MAX 5
-int FRONT = -1, REAR = -1, CQUEUE[MAX];
+#define MAX 20
+int FRONT = -1, REAR = -1;
 
-void ENQUE(int key) {
-    if ((FRONT == 0 && REAR == MAX - 1) || FRONT == REAR + 1) {
-        printf("CQUEUE Overflow\n");
-        return;
-    }
-    if (FRONT == -1 && REAR == -1) {
-        FRONT = REAR = 0;
-    }
-    else {
-        REAR = (REAR + 1) % MAX;
-    }
-    CQUEUE[REAR] = key;
+void ENQUE(int cq[]) {
+    char item;
+    if ((FRONT == 0 && REAR == MAX - 1) || (FRONT == REAR + 1)) printf("CQUEUE Overflow\n");
+    else if (FRONT == -1 && REAR == -1) FRONT = REAR = 0;
+    else REAR = (REAR + 1) % MAX;
+    printf("Enter element: ");
+    scanf("%d", &item);
+    cq[REAR] = item;
 }
 
-int DELQUE() {
+int DELQUE(int cq[]) {
     int value;
-    if (FRONT == -1) {
+    if(FRONT == -1) {
         printf("CQUEUE Underflow\n");
-        return NULL;
+        return -1;
     }
-    else if (FRONT == REAR) {
-        value = CQUEUE[FRONT];
-        FRONT = REAR = -1;
-    }
-    else {
-        value = CQUEUE[FRONT];
-        FRONT = (FRONT + 1) % MAX;
-    }
+    value = cq[FRONT];
+    if (FRONT == REAR) FRONT = REAR = -1;
+    else FRONT = (FRONT + 1) % MAX;
     return value;
+    
 }
 
-void DISPLAY() {
+void TRAVERSE(int cq[]) {
     int i;
-    if (FRONT == -1) {
-        printf("CQUEUE Underflow\n");
-        return;
-    }
-    else {
-        i = FRONT;
-        while (i != REAR) {
-            printf("%d ", CQUEUE[i]);
-            i = (i + 1) % MAX;
-        }
-        printf("%d\n", CQUEUE[REAR]);
-    }
+    if(FRONT == -1 && REAR == -1 || FRONT > REAR) printf("CQUEUE Underflow\n");
+    else for (i = FRONT; i != REAR; i = (i + 1) % MAX) printf("%d ", cq[i]);
+    printf("%d\n", cq[REAR]);
 }
 
 void main() {
-    int key, delChar, flag = 1, choice;
-    do {
-        printf("Menu:\n1. ENQUE\n2. DELQUE\n3. DISPLAY\n4. EXIT\nEnter choice: ");
+    int choice, flag = 1, CQUEUE[MAX], item;
+    while (flag) {
+        printf("\n1. ENQUE\n2. DELQUE\n3. TRAVERSE\n4. EXIT\nEnter choice: ");
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                printf("Enter element: ");
-                scanf("%d", &key);
-                ENQUE(key);
+                ENQUE(CQUEUE);
                 break;
             case 2:
-                delChar = DELQUE();
-                if (delChar) printf("Deleted %d from CQUEUE\n", delChar);
+                item = DELQUE(CQUEUE);
+                if (item != -1) printf("Removed %d from CQUEUE\n", item);
                 break;
             case 3:
-                DISPLAY();
+                TRAVERSE(CQUEUE);
                 break;
             case 4:
                 flag = 0;
                 break;
             default:
-                printf("Invalid choice!\n");
+                printf("Invalid options!");
         }
-    } while (flag);
+    }
 }
