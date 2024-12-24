@@ -4,7 +4,7 @@ int TOP = -1;
 
 void PUSH(int s[]) {
     int item;
-    if (TOP == MAX) printf("Stack Overflow\n");
+    if (TOP == MAX - 1) printf("Stack Overflow\n");
     else {
         printf("Enter element: ");
         scanf("%d", &item);
