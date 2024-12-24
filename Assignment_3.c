@@ -4,7 +4,7 @@ int FRONT = -1, REAR = -1;
 
 void ENQUE(char q[]) {
     char item;
-    if (REAR == MAX) printf("Queue Overflow\n");
+    if (REAR == MAX - 1) printf("Queue Overflow\n");
     else if (FRONT == -1) FRONT = 0;
     else {
         printf("Enter element: ");
