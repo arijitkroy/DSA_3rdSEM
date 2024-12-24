@@ -1,68 +1,54 @@
 #include <stdio.h>
-#define MAX 5
+#define MAX 20
 int FRONT = -1, REAR = -1;
-char QUEUE[MAX];
 
-void ENQUE(char key) {
-    if (REAR == MAX - 1) {
-        printf("Queue Overflow\n");
-        return;
-    }
-    if (FRONT == -1 && REAR == -1) {
-        FRONT = REAR = 0;
-    }
+void ENQUE(char q[]) {
+    char item;
+    if (REAR == MAX) printf("Queue Overflow\n");
+    else if (FRONT == -1) FRONT = 0;
     else {
-        REAR += 1;
+        printf("Enter element: ");
+        scanf(" %c", &item);
+        q[++REAR] = item;
     }
-    QUEUE[REAR] = key;
 }
 
-char DELQUE() {
-    char value;
-    if (FRONT > REAR || FRONT == -1) {
+char DELQUE(char q[]) {
+    if(FRONT == -1 && REAR == -1 || FRONT > REAR) {
         printf("Queue Underflow\n");
-        return NULL;
+        return -1;
     }
-    value = QUEUE[FRONT++];
-    return value;
+    return q[FRONT++];
 }
 
-void DISPLAY() {
+void TRAVERSE(char q[]) {
     int i;
-    if (FRONT > REAR || FRONT == -1) {
-        printf("Queue Underflow\n");
-        return;
-    }
-    for (i = FRONT; i <= REAR; i++) {
-        printf("%c ", QUEUE[i]);
-    }
-    printf("\n");
+    if(FRONT == -1 && REAR == -1 || FRONT > REAR) printf("Queue Underflow\n");
+    else for (i = FRONT; i <= REAR; i++) printf("%c ", q[i]);
 }
 
 void main() {
-    char key, delChar;
-    int flag = 1, choice;
-    do {
-        printf("Menu:\n1. ENQUE\n2. DELQUE\n3. DISPLAY\n4. EXIT\nEnter choice: ");
+    int choice, flag = 1;
+    char QUEUE[MAX], item;
+    while (flag) {
+        printf("\n1. ENQUE\n2. DELQUE\n3. TRAVERSE\n4. EXIT\nEnter choice: ");
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                printf("Enter element: ");
-                scanf(" %c", &key);
-                ENQUE(key);
+                ENQUE(QUEUE);
                 break;
             case 2:
-                delChar = DELQUE();
-                if (delChar) printf("Deleted %c from QUEUE\n", delChar);
+                item = DELQUE(QUEUE);
+                if (item != -1) printf("Removed %c from QUEUE\n", item);
                 break;
             case 3:
-                DISPLAY();
+                TRAVERSE(QUEUE);
                 break;
             case 4:
                 flag = 0;
                 break;
             default:
-                printf("Invalid choice!\n");
+                printf("Invalid options!");
         }
-    } while (flag);
+    }
 }
