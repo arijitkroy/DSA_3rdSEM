@@ -22,7 +22,8 @@ int POP(int s[]) {
 
 void TRAVERSE(int s[]) {
     int i;
-    for (i = TOP; i >= 0; i--) printf("%d\n", s[i]);
+    if(TOP == -1) printf("Stack Underflow\n");
+    else for (i = TOP; i >= 0; i--) printf("%d\n", s[i]);
 }
 
 void main() {
