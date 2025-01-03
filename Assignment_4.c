@@ -1,10 +1,13 @@
 #include <stdio.h>
-#define MAX 20
+#define MAX 10
 int FRONT = -1, REAR = -1;
 
 void ENQUE(int cq[]) {
-    char item;
-    if ((FRONT == 0 && REAR == MAX - 1) || (FRONT == REAR + 1)) printf("CQUEUE Overflow\n");
+    int item;
+    if ((FRONT == 0 && REAR == MAX - 1) || (FRONT == REAR + 1)) {
+        printf("CQUEUE Overflow\n");
+        return;
+    }
     else if (FRONT == -1 && REAR == -1) FRONT = REAR = 0;
     else REAR = (REAR + 1) % MAX;
     printf("Enter element: ");
@@ -27,9 +30,11 @@ int DELQUE(int cq[]) {
 
 void TRAVERSE(int cq[]) {
     int i;
-    if(FRONT == -1 && REAR == -1 || FRONT > REAR) printf("CQUEUE Underflow\n");
-    else for (i = FRONT; i != REAR; i = (i + 1) % MAX) printf("%d ", cq[i]);
-    printf("%d\n", cq[REAR]);
+    if(FRONT == -1 && REAR == -1) printf("CQUEUE Underflow\n");
+    else {
+        for (i = FRONT; i != REAR; i = (i + 1) % MAX) printf("%d ", cq[i]);
+        printf("%d\n", cq[REAR]);
+    }
 }
 
 void main() {
